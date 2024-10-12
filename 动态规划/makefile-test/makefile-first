@@ -1,0 +1,19 @@
+# 自定义依赖关系，源文件（后缀为.c)经过编译汇编生成目标文件（后缀为.o)
+# 目标文件执行生成可执行文件（类似与mytool）
+mytool:main.o tool1.o tool2.o
+# 写gcc命令时候，前面要tab按键一下
+# 不写-o参数，生成默认的可执行文件名为a.out，这里我们修改为main
+	gcc main.o tool1.o tool2.o -o main
+main.o:main.c
+#-Wall 可以看到所有的警告
+#-g 可以调试
+#-c 只允许执行到汇编步骤，不允许链接。
+	gcc main.c -c  -Wall -g -o main.o
+tool1.o:tool1.c
+	gcc tool1.c -c -Wall -g -o tool1.o
+tool2.o:tool2.c
+	gcc tool2.c -c -Wall -g -o tool2.o
+clean:
+# rm 删除指令，删除所有后缀为.o文件,删除mytool这个可执行文件
+# -rf 强制删除并且递归删除，否则的话会一直询问我们是否需要删除
+	rm *.o mytool -rf
